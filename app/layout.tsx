@@ -15,8 +15,10 @@ const poppins = Poppins( {
 
 export default function RootLayout ( {
     children
+    , dashboard
 }: {
   children: React.ReactNode;
+  dashboard: React.ReactNode;
 } ) {
 
     const [ currentTheme, setTheme ] = useState( 'light' );
@@ -41,8 +43,11 @@ export default function RootLayout ( {
     }, [ currentTheme ] );
 
     return (
-        <html lang='en'>
-            <body className={ [ poppins.className, currentTheme === 'dark' ? 'dark' : '' ].join( ' ' ) }>
+        <html
+            lang='en'
+            className={ currentTheme === 'dark' ? 'dark' : '' }
+        >
+            <body className={ [ poppins.className, 'bg-white dark:bg-gray-900' ].join( ' ' ) }>
                 <Navbar
                     handleToggle={ () => {
                         currentTheme === 'dark' ? setTheme( 'light' ) : setTheme( 'dark' );
@@ -50,6 +55,7 @@ export default function RootLayout ( {
                     hasDarkModeEnabled={ currentTheme === 'dark' }
                 />
                 { children }
+                { dashboard }
             </body>
         </html>
     );
