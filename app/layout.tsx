@@ -7,18 +7,23 @@ import {
     , useState
 } from 'react';
 import { Navbar } from './navbar';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools/build/modern/production.js';
+import {
+    QueryClient
+    , QueryClientProvider
+} from '@tanstack/react-query';
 
 const poppins = Poppins( {
     subsets: [ 'latin' ]
     , weight: [ '400', '500', '600', '700' ]
 } );
 
+const queryClient = new QueryClient( { defaultOptions: { queries: { staleTime: 1000 * 30 } } } );
+
 export default function RootLayout ( {
     children
-    , dashboard
 }: {
   children: React.ReactNode;
-  dashboard: React.ReactNode;
 } ) {
 
     const [ currentTheme, setTheme ] = useState( 'light' );
@@ -47,16 +52,18 @@ export default function RootLayout ( {
             lang='en'
             className={ currentTheme === 'dark' ? 'dark' : '' }
         >
-            <body className={ [ poppins.className, 'bg-white dark:bg-gray-900' ].join( ' ' ) }>
-                <Navbar
-                    handleToggle={ () => {
-                        currentTheme === 'dark' ? setTheme( 'light' ) : setTheme( 'dark' );
-                    } }
-                    hasDarkModeEnabled={ currentTheme === 'dark' }
-                />
-                { children }
-                { dashboard }
-            </body>
+            <QueryClientProvider client={ queryClient }>
+                <body className={ [ poppins.className, 'bg-white dark:bg-gray-900' ].join( ' ' ) }>
+                    <Navbar
+                        handleToggle={ () => {
+                            currentTheme === 'dark' ? setTheme( 'light' ) : setTheme( 'dark' );
+                        } }
+                        hasDarkModeEnabled={ currentTheme === 'dark' }
+                    />
+                    { children }
+                    <ReactQueryDevtools initialIsOpen={ false } />
+                </body>
+            </QueryClientProvider>
         </html>
     );
 }

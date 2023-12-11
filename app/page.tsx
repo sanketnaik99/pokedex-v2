@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Home () {
     return (
@@ -8,7 +9,9 @@ export default function Home () {
                 <p className='text-xl text-gray-500 dark:text-gray-200 mb-8'>
                     A PokeDex built using Next.js, Tailwind CSS, and TypeScript.
                 </p>
-                <button className='bg-pokemon-red-600 text-white dark:text-white hover:bg-red-700 px-5 py-3 rounded-lg hover:shadow-xl shadow-md shadow-pokemon-red-600/50'>Get started</button>
+                <Link href='/dashboard'>
+                    <button className='bg-pokemon-red-600 text-white dark:text-white hover:bg-red-700 px-5 py-3 rounded-lg hover:shadow-xl shadow-md shadow-pokemon-red-600/50'>Get started</button>
+                </Link>
             </header>
             <Image
                 src='/assets/pikachu.png'
