@@ -7,7 +7,7 @@ import {
     , useState
 } from 'react';
 import { Navbar } from './navbar';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools/build/modern/production.js';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import {
     QueryClient
     , QueryClientProvider
