@@ -12,11 +12,18 @@ import {
     QueryClient
     , QueryClientProvider
 } from '@tanstack/react-query';
+import dynamic from 'next/dynamic';
 
 const poppins = Poppins( {
     subsets: [ 'latin' ]
     , weight: [ '400', '500', '600', '700' ]
 } );
+
+const ReactQueryDevtoolsProduction = dynamic( () =>
+    import( '@tanstack/react-query-devtools/production' ).then( d => ( {
+        default: d.ReactQueryDevtools
+    } ) ),
+);
 
 const queryClient = new QueryClient( { defaultOptions: { queries: { staleTime: 1000 * 30 } } } );
 
@@ -61,7 +68,8 @@ export default function RootLayout ( {
                         hasDarkModeEnabled={ currentTheme === 'dark' }
                     />
                     { children }
-                    <ReactQueryDevtools initialIsOpen={ false } />
+                    { process.env.NODE_ENV === 'development' && <ReactQueryDevtools /> }
+                    { process.env.NODE_ENV === 'production' && <ReactQueryDevtoolsProduction /> }
                 </body>
             </QueryClientProvider>
         </html>
