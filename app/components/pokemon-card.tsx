@@ -10,7 +10,7 @@ export const PokemonCard = ( { pokemon }: Props ) => {
 
     const typesBadges = pokemon.types.map( type => (
         <div
-            className={ [ 'badge capitalize mx-1' ].join( ' ' ) }
+            className='badge capitalize mx-1 px-4 py-2 rounded-full bg-gradient-to-br from-gray-600/40 to-gray-800/40 text-white shadow-lg'
             key={ type.type.name }
         >
             { type.type.name }
@@ -23,7 +23,7 @@ export const PokemonCard = ( { pokemon }: Props ) => {
     const hp = pokemon.stats.find( stat => stat.stat.name === 'hp' )?.base_stat;
 
     return (
-        <div className='rounded-2xl shadow-lg flex overflow-hidden flex-col bg-gray-200 dark:bg-gray-600'>
+        <div className={ [ 'rounded-2xl shadow-lg flex overflow-hidden flex-col', `${ pokemon.types[ 0 ].type.name }-gradient` ].join( ' ' ) }>
             <div className='flex flex-row justify-center'>
                 <Image
                     src={ pokemon.sprites.other?.[ 'official-artwork' ]?.front_default || '' }
