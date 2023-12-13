@@ -15,7 +15,7 @@ const Page = async () => {
     await queryClient.prefetchQuery( {
         queryKey: [ 'pokemon' ]
         , queryFn: () => axios
-            .get<PokemonData>( 'https://pokeapi.co/api/v2/pokemon?limit=20' )
+            .get<PokemonData>( 'https://pokeapi.co/api/v2/pokemon?limit=12' )
             .then( res => res.data )
             .catch( err => console.log( err ) )
     } );

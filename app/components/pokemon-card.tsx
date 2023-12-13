@@ -10,7 +10,7 @@ export const PokemonCard = ( { pokemon }: Props ) => {
 
     const typesBadges = pokemon.types.map( type => (
         <div
-            className='badge capitalize mx-1 px-4 py-2 rounded-full bg-gradient-to-br from-gray-600/40 to-gray-800/40 text-white shadow-lg'
+            className='badge select-none capitalize mx-1 px-4 py-2 rounded-full bg-gradient-to-br from-gray-600/40 to-gray-800/40 text-white shadow-lg'
             key={ type.type.name }
         >
             { type.type.name }
