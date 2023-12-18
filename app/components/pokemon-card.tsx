@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { Pokemon } from '../types/pokemon';
 import Image from 'next/image';
 
@@ -24,6 +23,10 @@ export const PokemonCard = ( { pokemon }: Props ) => {
 
     return (
         <div className={ [ 'rounded-2xl shadow-lg flex overflow-hidden flex-col', `${ pokemon.types[ 0 ].type.name }-gradient` ].join( ' ' ) }>
+            <div className='flex flex-row justify-between pt-3 px-3'>
+                <h3 className='text-inherit text-2xl capitalize font-bold'>{ pokemon.name }</h3>
+                <h4 className='text-inherit text-2xl font-bold'>{ hp } HP</h4>
+            </div>
             <div className='flex flex-row justify-center'>
                 <Image
                     src={ pokemon.sprites.other?.[ 'official-artwork' ]?.front_default || '' }
@@ -33,34 +36,51 @@ export const PokemonCard = ( { pokemon }: Props ) => {
                     className='w-60 mx-10'
                 />
             </div>
-            <div className='flex flex-row p-2 pb-4 justify-center'>{ typesBadges }</div>
-            <div className='px-4 py-2 bg-white dark:bg-gray-700 dark:text-gray-100 color-transition'>
-                <div className='font-bold text-3xl mb-2 text-center capitalize'>
-                    { pokemon.name }
-                </div>
-
+            <div className='flex flex-row pb-2 justify-center'>{ typesBadges }</div>
+            <div className='px-4 py-2 color-transition'>
                 <div className='flex flex-row mt-2'>
-                    <div className='flex flex-1 flex-col items-center border-r-2 border-gray-200 dark:border-gray-600'>
-                        <span className='font-medium text-lg mb-0 pb-0'>Weight</span>
-                        <span className='font-light text-lg mt-0 pt-0'>{ weight } Kg</span>
+                    <div className='flex flex-1 flex-col items-center'>
+                        <span className='text-lg font-semibold'>Weight</span>
+                        <span className='font-light text-lg'>{ weight } Kg</span>
                     </div>
                     <div className='flex flex-1 flex-col items-center  '>
-                        <span className='font-medium text-lg'>Height</span>
+                        <span className='text-lg font-semibold'>Height</span>
                         <span className='font-light text-lg'>{ height } m</span>
                     </div>
                 </div>
-                <div className='mt-0.5 flex flex-col items-center'>
-                    <span className='font-medium text-lg'>HP</span>
-                    <span className='font-light text-lg'>{ hp }</span>
+                <div className='py-2 flex flex-col gap-1'>
+                    { pokemon.stats.map( stat => (
+                        <div
+                            className=''
+                            key={ stat.stat.name }
+                        >
+                            <div className='flex mb-2 items-center justify-between'>
+                                <div>
+                                    <span
+                                        className='text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full bg-gradient-to-br from-gray-600/40 to-gray-800/40 text-white shadow-sm'
+                                    >
+                                        { stat.stat.name }
+                                    </span>
+                                </div>
+                                <div className='text-right'>
+                                    <span
+                                        className='text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full color-transition bg-gradient-to-br from-gray-600/40 to-gray-800/40 text-white shadow-sm'
+                                    >
+                                        { stat.base_stat }
+                                    </span>
+                                </div>
+                            </div>
+                            <div
+                                className='overflow-hidden h-2 mb-4 text-xs flex rounded bg-gradient-to-br from-gray-600/40 to-gray-800/40 shadow-md'
+                            >
+                                <div
+                                    style={ { width: `${ stat.base_stat }%` } }
+                                    className='shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-white rounded-full'
+                                />
+                            </div>
+                        </div>
+                    ) ) }
                 </div>
-                <Link
-                    href={ `/pokemon/${ pokemon.id }` }
-                    className='mt-4 mb-3 py-2 px-4 sm:mx-8 md:mx-4 mx-2 rounded-xl shadow-sm  cursor-pointer font-bold bg-gradient-to-br from-red-400 to-red-600 text-white flex flex-row justify-center hover:shadow-lg'
-                >
-                    <span className='capitalize text-center'>
-                        More About { pokemon.name }
-                    </span>
-                </Link>
             </div>
         </div>
     );
